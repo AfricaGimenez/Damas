@@ -27,7 +27,12 @@ public class Posición {
     }
 
     public Posición(int fila, char columna) {
-        Fila = fila;
-        Columna = columna;
+        this.Fila = fila;
+        this.Columna = columna;
+    }
+
+    public Posición(Posición otra){
+        this.Fila = otra.Fila;
+        this.Columna = otra.Columna;
     }
 }
