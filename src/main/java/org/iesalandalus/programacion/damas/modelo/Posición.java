@@ -35,4 +35,17 @@ public class Posición {
         this.Fila = otra.Fila;
         this.Columna = otra.Columna;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        org.iesalandalus.programacion.damas.modelo.Posición posición = (org.iesalandalus.programacion.damas.modelo.Posición) o;
+        return Fila == posición.Fila && Columna == posición.Columna;
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(Fila, Columna);
+    }
 }
