@@ -25,4 +25,9 @@ public class Posición {
         }
         Columna = columna;
     }
+
+    public Posición(int fila, char columna) {
+        Fila = fila;
+        Columna = columna;
+    }
 }
