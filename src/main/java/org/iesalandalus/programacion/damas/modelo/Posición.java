@@ -48,4 +48,9 @@ public class Posición {
     public int hashCode() {
         return java.util.Objects.hash(Fila, Columna);
     }
+
+    @Override
+    public String toString() {
+        return "Fila =" + Fila + ", Columna = " + Columna;
+    }
 }
