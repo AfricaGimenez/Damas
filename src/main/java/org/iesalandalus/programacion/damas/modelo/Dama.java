@@ -150,5 +150,13 @@ public class Dama {
             this.esDamaEspecial = true;
         }
     }
+
+    @Override
+    public String toString() {
+        return "Dama{" +
+                "posicion=" + posicion +
+                ", color=" + color +
+                '}';
+    }
 }
 
