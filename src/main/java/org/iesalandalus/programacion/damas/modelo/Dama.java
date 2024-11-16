@@ -1,5 +1,5 @@
 package org.iesalandalus.programacion.damas.modelo;
-
+import java.util.Random;
 public class Dama {
     private Color color;
     private Posición posicion;
@@ -37,7 +37,7 @@ public class Dama {
         return posicion;
     }
 
-    public void setPosicion(Posicion posicion) {
+    public void setPosicion(Posición posicion) {
         if (posicion == null) {
             throw new IllegalArgumentException("La posición no puede ser nula.");
         }
@@ -55,11 +55,11 @@ public class Dama {
         }
         this.esDamaEspecial = esDamaEspecial;
     }
-}
+
     // Metodo privado para generar una posición aleatoria en las filas 1, 2 o 3 en una casilla negra
     private Posición generarPosicionAleatoria() {
     Random random = new Random();
-    int fila = random.nextInt(3) + 1; // Filas 1, 2, o 3
+        int fila = random.nextInt(3) + 1; // Filas 1, 2, o 3
     int columna;
 
     if (fila % 2 == 1) { // Filas 1 y 3 (impares): casillas negras en columnas pares
@@ -68,7 +68,13 @@ public class Dama {
         columna = 2 * random.nextInt(4) + 1; // Columnas posibles: 1, 3, 5, 7
     }
 
-    return new Posición(fila, columna);
+    return new Posición(fila, (char) columna);
     }
+
+    public Dama(org.iesalandalus.programacion.damas.modelo.Color color, org.iesalandalus.programacion.damas.modelo.Posición posicion) {
+        this.color = color;
+        this.posicion = posicion;
     }
+
 }
+
