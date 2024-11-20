@@ -75,5 +75,15 @@ public class Consola {
         System.out.println("4.Suroeste");
     }
 
+    public static int elegirPasos() {
+        int pasos = 0;
+        System.out.println("Introduzca el número de pasos (mínimo 1): ");
+        pasos = Entrada.entero();
+        if (pasos < 1){
+            System.out.println("Como mínimo tienes que dar un paso");
+        }
+        return pasos;
+    }
+
 
 }
