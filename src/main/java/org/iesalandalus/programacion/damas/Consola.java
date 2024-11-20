@@ -44,4 +44,27 @@ public class Consola {
         return color;
     }
 
+    public static Direccion elegirDirección(){
+        int mover;
+        do {
+            System.out.println("Elige una dirección (1 - 4): ");
+            mover = Entrada.entero();
+        } while (mover < 1 || mover > 4);
+        Direccion direccion = null;
+        switch (mover){
+            case 1:
+                return Direccion.NOROESTE;
+            case 2:
+                return Direccion.NORESTE;
+            case 3:
+                return Direccion.SURESTE;
+            case 4:
+                return Direccion.SUROESTE;
+        }
+        if (mover < 1 || mover > 4){
+            throw new IllegalArgumentException("Solo puedes elegir entre esas 4 opciones");
+        }
+        return direccion;
+    }
+
 }
