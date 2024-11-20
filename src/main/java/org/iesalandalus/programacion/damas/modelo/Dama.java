@@ -72,7 +72,7 @@ public class Dama {
             columna = 2 * random.nextInt(4) + 1; // Columnas posibles: 1, 3, 5, 7
         }
 
-        return new Posicion(fila, (char) ('A' + columna - 1)); // Ajuste para convertir a columna tipo carácter
+        return new Posicion (fila, (char) ('A' + columna - 1)); // Ajuste para convertir a columna tipo carácter
     }
 
     // Método público para generar una posición inicial de manera aleatoria

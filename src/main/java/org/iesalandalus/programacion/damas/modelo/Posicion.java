@@ -4,6 +4,9 @@ public class Posicion {
     private int Fila;
     private char Columna;
 
+    public Posicion(int fila, char c) {
+    }
+
     public int getFila() {
         return Fila;
     }
