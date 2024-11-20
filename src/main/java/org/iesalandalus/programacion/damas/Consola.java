@@ -44,6 +44,7 @@ public class Consola {
         return color;
     }
 
+    // Metodo para elegir direccion
     public static Direccion elegirDirección(){
         int mover;
         do {
@@ -67,6 +68,7 @@ public class Consola {
         return direccion;
     }
 
+    // Metodo para mostrar direcciones
     public static void mostrarMenuDirecciones(){
         System.out.println("Selecciona una dirección: ");
         System.out.println("1.Noroeste");
@@ -75,6 +77,7 @@ public class Consola {
         System.out.println("4.Suroeste");
     }
 
+    // Metodo para elegir pasos
     public static int elegirPasos() {
         int pasos = 0;
         System.out.println("Introduzca el número de pasos (mínimo 1): ");
@@ -83,6 +86,12 @@ public class Consola {
             System.out.println("Como mínimo tienes que dar un paso");
         }
         return pasos;
+    }
+
+    // Metodo para despedirse
+    public static void despedirse() {
+        System.out.println("Gracias por jugar!");
+        System.exit(0);
     }
 
 
