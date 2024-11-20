@@ -1,5 +1,9 @@
 package org.iesalandalus.programacion.damas;
 
+import org.iesalandalus.programacion.damas.modelo.Color;
+import org.iesalandalus.programacion.damas.modelo.Direccion;
+import org.iesalandalus.programacion.utilidades.Entrada;
+
 public class Consola {
     public Consola() {
     }
@@ -23,5 +27,21 @@ public class Consola {
         return opcion;
     }
 
+    // Metodo para elegir un color
+    public static Color elegirColor() {
+        Color color = null;
+        while (color == null) {
+            System.out.println("Seleccione el color (1: Blanco, 2: Negro):");
+            int opcion = Entrada.entero();
+            if (opcion == 1) {
+                color = Color.BLANCO;
+            } else if (opcion == 2) {
+                color = Color.NEGRO;
+            } else {
+                System.out.println("Opción no válida, por favor elija 1 o 2.");
+            }
+        }
+        return color;
+    }
 
 }
