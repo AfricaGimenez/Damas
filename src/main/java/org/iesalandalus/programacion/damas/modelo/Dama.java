@@ -1,101 +1,134 @@
 package org.iesalandalus.programacion.damas.modelo;
 
+import javax.naming.OperationNotSupportedException;
 import java.util.Random;
 
 public class Dama {
-    private Color color;
-    private Posicion posicion;
-    private Boolean esDamaEspecial;
+    //Atributos
+    private static Color color;
+    private static Posicion posicion;
+    private static boolean esDamaEspecial;
 
-    // Constructor por defecto que crea una dama blanca en una posición válida aleatoria
+    //constructor
     public Dama() {
-        this.color = Color.BLANCO;
-        this.posicion = generarPosicionAleatoria();
-        this.esDamaEspecial = false;
+        setColor(Color.BLANCO);
+        setPosicion(crearPosicionAleatoria());
+        esDamaEspecial = false;
     }
 
-    // Constructor con parámetros
-    public Dama(Color color, Posicion posicion, Boolean esDamaEspecial) {
-        this.setColor(color); // Usamos el setter para validar el color
-        this.setPosicion(posicion); // Usamos el setter para validar la posición
-        this.setEsDamaEspecial(esDamaEspecial); // Usamos el setter para validar este atributo
+    public Dama(Color color){
+        setColor(color);
+        setPosicion(crearPosicionAleatoria());
+        esDamaEspecial = false;
     }
 
-    // Constructor que inicializa color y posición (elimina el atributo esDamaEspecial)
-    public Dama(Color color, Posicion posicion) {
-        this(color, posicion, false); // Reutiliza el constructor completo
+    //Metodo crearPosicionAleatoria
+    private Posicion crearPosicionAleatoria(){
+        Random random = new Random();
+
+        int filaInicio = (color == Color.BLANCO) ? 3:6;
+        int fila = random.nextInt(3) + filaInicio;
+        int columna;
+        char columnaChar;
+        do {
+            columnaChar = (char) ('A' + random.nextInt(8));
+            columna = columnaChar - 'A';
+        } while ((fila + columna) % 2 == 0);
+
+        return new Posicion(fila, columnaChar);
+
     }
 
-    // Métodos getter y setter
+    //Metodo mover
+    public static void mover(Direccion direccion, int pasos) throws OperationNotSupportedException{
+        if (direccion == null){
+            throw new IllegalArgumentException("Tienes que poner una dirección");
+        }
+        if (pasos< 1)  {
+            throw new IllegalArgumentException("Tienes que poner un número mayor que 0");
+        }
+        if (!esDamaEspecial && pasos > 1) {
+            pasos = 1;
+        }
+        int Fila = posicion.getFila();
+        char Columna = posicion.getColumna();
+
+        switch (direccion){
+            case NORESTE:
+                if (color == Color.NEGRO && !esDamaEspecial) {
+                    throw new OperationNotSupportedException("La dama negra no puede moverse hacia el noreste.");
+                }
+                Fila += pasos;
+                Columna += pasos;
+                break;
+            case SURESTE:
+                if (color == Color.BLANCO && !esDamaEspecial) {
+                    throw new OperationNotSupportedException("La dama blanca no puede moverse hacia el sureste.");
+                }
+                Fila -= pasos;
+                Columna += pasos;
+                break;
+            case SUROESTE:
+                if (color == Color.BLANCO && !esDamaEspecial) {
+                    throw new OperationNotSupportedException("La dama blanca no puede moverse hacia el suroeste.");
+                }
+                Fila -= pasos;
+                Columna -= pasos;
+                break;
+            case NOROESTE:
+                if (color == Color.NEGRO && !esDamaEspecial) {
+                    throw new OperationNotSupportedException("La dama negra no puede moverse hacia el noroeste.");
+                }
+                Fila += pasos;
+                Columna -= pasos;
+                break;
+        }
+
+        if (Fila < 1 || Fila > 8 || Columna < 'A' || Columna > 'H') {
+            throw new OperationNotSupportedException("El movimiento de la dama la saca fuera del tablero.");
+        }
+
+        posicion = new Posicion(Fila, Columna);
+
+        if ((color == Color.BLANCO && Fila == 1) || (color == Color.NEGRO && Fila == 8)) {
+            esDamaEspecial = true;
+        }
+    }
+
+    //Metodos
+
     public Color getColor() {
         return color;
     }
 
     public void setColor(Color color) {
-        if (color == null) {
-            throw new IllegalArgumentException("El color no puede ser nulo.");
-        }
         this.color = color;
     }
 
     public Posicion getPosicion() {
-        return posicion;
+        return new Posicion(posicion);
     }
 
     public void setPosicion(Posicion posicion) {
         if (posicion == null) {
-            throw new IllegalArgumentException("La posición no puede ser nula.");
+            throw new NullPointerException("La posición no puede ser nula.");
         }
-        this.posicion = posicion;
+        this.posicion = new Posicion(posicion);
     }
 
-    public Boolean getEsDamaEspecial() {
+    public boolean isEsDamaEspecial() {
         return esDamaEspecial;
     }
 
-    public void setEsDamaEspecial(Boolean esDamaEspecial) {
-        if (esDamaEspecial == null) {
-            throw new IllegalArgumentException("El atributo 'esDamaEspecial' no puede ser nulo.");
-        }
+    public void setEsDamaEspecial(boolean esDamaEspecial) {
         this.esDamaEspecial = esDamaEspecial;
     }
 
-    // Método privado para generar una posición aleatoria en las filas 1, 2 o 3 en una casilla negra
-    private Posicion generarPosicionAleatoria() {
-        Random random = new Random();
-        int fila = random.nextInt(3) + 1; // Filas 1, 2, o 3
-        int columna;
-
-        if (fila % 2 == 1) { // Filas 1 y 3 (impares): casillas negras en columnas pares
-            columna = 2 * (random.nextInt(4) + 1); // Columnas posibles: 2, 4, 6, 8
-        } else { // Fila 2 (par): casillas negras en columnas impares
-            columna = 2 * random.nextInt(4) + 1; // Columnas posibles: 1, 3, 5, 7
-        }
-
-        return new Posicion (fila, (char) ('A' + columna - 1)); // Ajuste para convertir a columna tipo carácter
-    }
-
-    // Método público para generar una posición inicial de manera aleatoria
-    public static Posicion crearPosicionInicial() {
-        Random random = new Random();
-        int fila = random.nextInt(3) + 1; // Filas 1, 2, o 3
-        int columna;
-
-        if (fila % 2 == 1) { // Filas 1 y 3 (impares): casillas negras en columnas pares
-            columna = 2 * (random.nextInt(4) + 1); // Columnas posibles: 2, 4, 6, 8
-        } else { // Fila 2 (par): casillas negras en columnas impares
-            columna = 2 * random.nextInt(4) + 1; // Columnas posibles: 1, 3, 5, 7
-        }
-
-        return new Posicion(fila, (char) ('A' + columna - 1)); // Ajuste para convertir a columna tipo carácter
-    }
-
+    //Metodo to string
     @Override
     public String toString() {
-        return "Dama{" +
-                "posicion=" + posicion +
-                ", color=" + color +
-                ", esDamaEspecial=" + esDamaEspecial +
-                '}';
+        return "Dama: color=" + color +
+                ", posicion=" + posicion;
     }
+
 }
