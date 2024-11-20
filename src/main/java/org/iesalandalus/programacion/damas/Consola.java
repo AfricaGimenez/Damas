@@ -67,4 +67,13 @@ public class Consola {
         return direccion;
     }
 
+    public static void mostrarMenuDirecciones(){
+        System.out.println("Selecciona una dirección: ");
+        System.out.println("1.Noroeste");
+        System.out.println("2.Noreste");
+        System.out.println("3.Sureste");
+        System.out.println("4.Suroeste");
+    }
+
+
 }
